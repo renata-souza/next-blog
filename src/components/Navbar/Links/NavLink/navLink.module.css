@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+.container:not(.active):hover {
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
 .active {
   background-color: var(--text);
   color: var(--bg);
