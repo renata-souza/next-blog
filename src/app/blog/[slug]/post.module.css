@@ -52,3 +52,9 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+@media (max-width: 768px) {
+  .imgContainer {
+    display: none;
+  }
+}
