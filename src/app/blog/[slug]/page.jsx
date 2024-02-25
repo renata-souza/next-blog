@@ -1,27 +1,32 @@
 import Image from 'next/image'
-import React from 'react'
+import React, { Suspense } from 'react'
 import styles from './post.module.css'
 import PostAuthor from '@/components/PostAuthor/PostAuthor'
+import { getPost } from '@/data/db'
 
-const PostPage = () => {
+const PostPage = async ({ params }) => {
+  const { slug } = params
+
+  const post = await getPost(slug)
+  console.log(post)
+
   return (
     <main className={styles.container}>
       <div className={styles.imgContainer}>
-        <Image className={styles.img} src="https://images.pexels.com/photos/15215468/pexels-photo-15215468/free-photo-of-ceu-azul-ceu-de-brigadeiro-predios-edificios.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt='' fill />
+        {post.img && <Image className={styles.img} src={post.img} alt='' fill />}
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
-          <Image className={styles.avatar} src='/noavatar.png' alt='' width={50} height={50} />
-          <PostAuthor />
+          <Suspense fallback={<div>Loading...</div>}>
+            <PostAuthor userId={post.userId} />
+          </Suspense>
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>01-01-2024</span>
+            <span className={styles.detailValue}>{post.createdAt.toString().slice(4, 16)}</span>
           </div>
         </div>
-        <p className={styles.content}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam non soluta dignissimos? Enim recusandae laudantium neque? Mollitia neque id, repellendus dicta vitae autem consectetur rem cupiditate repellat quia, ducimus doloremque.
-        </p>
+        <p className={styles.content}>{post.description}</p>
       </div>
     </main>
   )
