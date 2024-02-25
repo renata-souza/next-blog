@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import styles from './post.module.css'
+import PostAuthor from '@/components/PostAuthor/PostAuthor'
 
 const PostPage = () => {
   return (
@@ -12,10 +13,7 @@ const PostPage = () => {
         <h1 className={styles.title}>Title</h1>
         <div className={styles.detail}>
           <Image className={styles.avatar} src='/noavatar.png' alt='' width={50} height={50} />
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Author</span>
-            <span className={styles.detailValue}>Terry Jefferson</span>
-          </div>
+          <PostAuthor />
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>Published</span>
             <span className={styles.detailValue}>01-01-2024</span>
