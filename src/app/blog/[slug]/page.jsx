@@ -4,6 +4,17 @@ import styles from './post.module.css'
 import PostAuthor from '@/components/PostAuthor/PostAuthor'
 import { getPost } from '@/data/db'
 
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params
+
+  const post = await getPost(slug)
+
+  return {
+    title: post.title,
+    description: post.description
+  }
+}
+
 const PostPage = async ({ params }) => {
   const { slug } = params
 

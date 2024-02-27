@@ -3,6 +3,11 @@ import styles from './blog.module.css'
 import PostCard from '@/components/PostCard/PostCard'
 import { getPosts } from '@/data/db'
 
+export const metadata = {
+  title: "Blog page",
+  description: "Interesting post about a lot of stuff.",
+};
+
 const BlogPage = async () => {
   const posts = await getPosts()
 
