@@ -1,9 +1,10 @@
 'use client'
 
+import { handleLogout } from '@/data/action'
+import Image from 'next/image'
 import { useState } from 'react'
 import NavLink from './NavLink/NavLink'
 import styles from './links.module.css'
-import Image from 'next/image'
 
 const links = [
   {
@@ -24,11 +25,10 @@ const links = [
   }
 ]
 
-const Links = () => {
+const Links = ({session}) => {
   const [open, setOpen] = useState(false)
 
   // TEMPORARY AUTH
-  const session = true
   const isAdmin = true
 
   return (
@@ -36,11 +36,13 @@ const Links = () => {
       <nav className={styles.links}>
         {links.map(link => <NavLink item={link} key={link.title} />)}
 
-        {session
+        {session?.user
           ? (
             <>
-              {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
-              <button className={styles.logout}>Logout</button>
+              {session.user?.isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+              <form action={handleLogout}>
+                <button className={styles.logout}>Logout</button>
+              </form>
             </>
           )
           : <NavLink item={{ title: "Login", path: "/login" }} />
